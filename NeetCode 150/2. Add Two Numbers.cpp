@@ -1,8 +1,8 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode* ans;
-        ListNode* cur;
+        ListNode* cur = new ListNode();
+        ListNode* ans = cur;
         bool assigned = false;
 
         int sum = 0;
@@ -20,23 +20,10 @@ public:
             int remain = sum % 10;
             sum /= 10;
 
-            if(!assigned) {
-                assigned = true;
-                if(l1 != nullptr || l2 != nullptr || sum) {
-                    cur = ans = new ListNode(remain);
-                    cur->next = new ListNode();
-                    cur = cur->next;
-                } else {
-                    cur = ans = new ListNode(remain);
-                }
-            } else {
-                if(l1 != nullptr || l2 != nullptr || sum) {
-                    cur->val = remain;
-                    cur->next = new ListNode();
-                    cur = cur->next;
-                } else {
-                    cur->val = remain;
-                }
+            cur->val = remain;
+            if(l1 != nullptr || l2 != nullptr || sum) {
+                cur->next = new ListNode();
+                cur = cur->next;
             }
         }
         return ans;
