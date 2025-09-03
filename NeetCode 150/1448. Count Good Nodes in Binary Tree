@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int goodNodes(TreeNode* root) {
+        recursion(root);
+        return ans;
+    }
+
+private:
+    multiset<int> st;
+    int ans = 0;
+    void recursion(TreeNode* node) {
+        if(node == nullptr)
+            return;
+        st.insert(node->val);
+        if(*st.rbegin() == node->val) {
+            ans ++;
+        }
+        goodNodes(node->left);
+        goodNodes(node->right);
+        st.erase(st.find(node->val));
+    }
+};
