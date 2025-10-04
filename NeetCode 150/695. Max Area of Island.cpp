@@ -74,17 +74,28 @@ private:
     int bfs(int i, int j, vector<vector<int>>& grid) {
         queue<pair<int,int>> q;
         q.push({i, j});
+        vis[i][j] = 1;
         int size = 0;
         while(q.size()) {
             auto [curI, curJ] = q.front();
             q.pop();
             size++;
-            vis[curI][curJ] = true;
-
-            if(curI + 1 < n && !vis[curI + 1][curJ] && grid[curI + 1][curJ])
+            if(curI + 1 < n && !vis[curI + 1][curJ] && grid[curI + 1][curJ] == 1) {
                 q.push({curI + 1, curJ});
-            if(curJ + 1 < m && !vis[curI][curJ + 1] && grid[curI][curJ + 1])
+                vis[curI + 1][curJ] = true;
+            }
+            if(curJ + 1 < m && !vis[curI][curJ + 1] && grid[curI][curJ + 1] == 1) {
                 q.push({curI, curJ + 1});
+                vis[curI][curJ + 1] = true;
+            }
+            if(curI - 1 >= 0 && !vis[curI - 1][curJ] && grid[curI - 1][curJ] == 1) {
+                q.push({curI - 1, curJ});
+                vis[curI - 1][curJ] = true;
+            }
+            if(curJ - 1 >= 0 && !vis[curI][curJ - 1] && grid[curI][curJ - 1] == 1) {
+                q.push({curI, curJ - 1});
+                vis[curI][curJ - 1] = true;
+            }
         }
         return size;
     }
