@@ -50,3 +50,43 @@ private:
         }
     };
 };
+/*
+// another bfs solution
+class Solution {
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        n = grid.size(), m = grid[0].size();
+        vis.resize(n + 5, vector<bool>(m + 5));
+
+        int ans = 0;
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                if(!vis[i][j] && grid[i][j])
+                    ans = max(ans, bfs(i, j, grid));
+            }
+        }
+
+        return ans;
+    }
+private:
+    int n, m;
+    vector<vector<bool>> vis;
+    int bfs(int i, int j, vector<vector<int>>& grid) {
+        queue<pair<int,int>> q;
+        q.push({i, j});
+        int size = 0;
+        while(q.size()) {
+            auto [curI, curJ] = q.front();
+            q.pop();
+            size++;
+            vis[curI][curJ] = true;
+
+            if(curI + 1 < n && !vis[curI + 1][curJ] && grid[curI + 1][curJ])
+                q.push({curI + 1, curJ});
+            if(curJ + 1 < m && !vis[curI][curJ + 1] && grid[curI][curJ + 1])
+                q.push({curI, curJ + 1});
+        }
+        return size;
+    }
+};
+*/
