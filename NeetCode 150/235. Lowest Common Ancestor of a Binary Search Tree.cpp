@@ -1,4 +1,28 @@
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        return dfs(root, p->val, q->val);
+    }
+private:
+    TreeNode* dfs(TreeNode* cur, int p, int q) {
+        bool lp = exist(cur->left, p), rp = exist(cur->right, p);
+        bool lq = exist(cur->left, q), rq = exist(cur->right, q);
 
+        if(lp && lq) return dfs(cur->left, p, q);
+        else if(rp && rq) return dfs(cur->right, p, q);
+
+        return cur;
+    }
+    bool exist(TreeNode *cur, int val) {
+        if(cur == nullptr) return false;
+        if(cur->val == val) return true;
+
+        return exist(cur->left, val) | exist(cur->right, val);
+    }
+};
+
+/* 
+// solution using pointers
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
@@ -71,3 +95,4 @@ private:
         }
     }
 };
+*/
