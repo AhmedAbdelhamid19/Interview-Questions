@@ -1,0 +1,39 @@
+
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end());
+        memset(dp, -1, sizeof(dp));
+        for (int i = 0; i < intervals.size(); i++) {
+            ind[i] = binarySearch(i, intervals);
+        }
+        return intervals.size() - run(0, intervals);
+    }
+private:
+    int dp[100005];
+    int ind[100005];
+    int run(int i, vector<vector<int>>& intervals) {
+        if(i == intervals.size()) return 0;
+
+        int &ret = dp[i];
+        if(~ret) return ret;
+
+        int ret1 = run(i + 1, intervals);
+        int ret2 = 1 + run(ind[i], intervals);
+        return ret = max(ret1, ret2);
+    }
+    int binarySearch(int i, vector<vector<int>>& intervals) {
+        int l = i + 1, r = intervals.size() - 1, ans = intervals.size();
+        while(l <= r) {
+            int m = (l + r) >> 1;
+            int start = intervals[m][0], end = intervals[m][1];
+            if(start >= intervals[i][1]) {
+                ans = m;
+                r = m - 1;
+            } else {
+                l = m + 1;
+            }
+        }
+        return ans;
+    }
+};
